@@ -1,0 +1,86 @@
+package supermercado;
+
+import java.util.LinkedList;
+
+public class Supermercado {
+
+    LinkedList<Producto> lista = new LinkedList<>();
+
+    public void agregarProducto(Producto p) {
+        lista.add(p);
+    }
+
+    public void eliminarProducto(String codigo) {
+
+        for (Producto p : lista) {
+
+            if (p.getCodigo().equals(codigo)) {
+                lista.remove(p);
+                System.out.println("Producto eliminado");
+                return;
+            }
+        }
+
+        System.out.println("Producto no encontrado");
+    }
+
+    public Producto buscarProducto(String codigo) {
+
+        for (Producto p : lista) {
+
+            if (p.getCodigo().equals(codigo)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public void modificarPrecio() {
+
+        for (Producto p : lista) {
+            p.aumentarPrecio();
+        }
+
+        System.out.println("Precio aumentado en 5%");
+    }
+
+    public void mostrarProductos() {
+
+        for (Producto p : lista) {
+            p.mostrar();
+        }
+    }
+
+    public void generarFactura() {
+
+        Producto[] arreglo = new Producto[10];
+
+        int i = 0;
+
+        for (Producto p : lista) {
+
+            if (i < 10) {
+                arreglo[i] = p;
+                i++;
+            }
+        }
+
+        double subtotal = 0;
+
+        System.out.println("\nCodigo\tNombre\tCantidad\tPrecio\tTotal");
+
+        for (int j = 0; j < i; j++) {
+
+            arreglo[j].mostrar();
+            subtotal += arreglo[j].getTotal();
+        }
+
+        double iva = subtotal * 0.19;
+        double totalFinal = subtotal + iva;
+
+        System.out.println("\nSubtotal: " + subtotal);
+        System.out.println("IVA (19%): " + iva);
+        System.out.println("Total Final: " + totalFinal);
+    }
+}
